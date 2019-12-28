@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
 
@@ -12,12 +12,12 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def get_users_route():
-    return dumps(get_users(mongo.db))
+    return Response(dumps(get_users(mongo.db)), mimetype='text/json')
 
 
 @app.route('/user/<id>')
 def get_user_route(id):
-    return dumps(get_user(mongo.db, id))
+    return Response(dumps(get_user(mongo.db, id)), mimetype='text/json')
 
 
 if __name__ == '__main__':
